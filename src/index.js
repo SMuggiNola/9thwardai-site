@@ -178,8 +178,10 @@ async function submitAnswers(request, env) {
 
   let score = 0;
   const missedSkills = new Set();
+
   for (const row of results) {
-    if (answers[row.id] === row.correct_choice) {
+    const studentAnswer = answers[row.id.toString()]; // FIX: force string key
+    if (studentAnswer === row.correct_choice) {
       score++;
     } else {
       missedSkills.add(row.skill);
