@@ -207,3 +207,15 @@ details[open] summary::before {
   color: black !important;
   box-shadow: 0 0 15px #00ff99;
 }
+pre {
+  text-align: left;
+  background-color: black;
+  color: #00ff99;
+  padding: 1em;
+  white-space: pre-wrap;
+  border: 1px solid #00ff99;
+  border-radius: 5px;
+  max-height: 400px;
+  overflow: auto;
+  margin-left: 0;
+}
