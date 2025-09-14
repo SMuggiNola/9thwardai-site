@@ -39,6 +39,13 @@
     .rabbit-text {
       font-size: 0.9em;
       margin-bottom: 0.3em;
+      transition: text-shadow 0.5s;
+    }
+
+    /* Glow effect when text is "Click Me" */
+    .glow {
+      color: #00ff99;
+      text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99, 0 0 40px #00ff99;
     }
 
     .rabbit {
@@ -66,10 +73,12 @@
       opacity: 0;
       transition: transform 0.6s ease-out, opacity 0.6s ease-out;
       white-space: nowrap;
+      text-align: center;
     }
     #matrix-message.show {
       transform: translate(-50%, -50%) scale(3);
       opacity: 1;
+      text-shadow: 0 0 15px #00ff99, 0 0 30px #00ff99, 0 0 60px #00ff99;
     }
   </style>
 </head>
@@ -77,7 +86,7 @@
   <div id="message" class="typing"></div>
 
   <div id="rabbit" class="hidden rabbit-container">
-    <div class="rabbit-text">Follow the White Rabbit...</div>
+    <div id="rabbit-text" class="rabbit-text">Follow the White Rabbit...</div>
     <div class="rabbit" onclick="matrixHasYou()">🐇</div>
   </div>
 
@@ -89,6 +98,7 @@
     const speed = 120; // typing speed in ms
     const messageEl = document.getElementById("message");
     const rabbitEl = document.getElementById("rabbit");
+    const rabbitText = document.getElementById("rabbit-text");
     const matrixMsg = document.getElementById("matrix-message");
 
     function typeWriter() {
@@ -100,8 +110,21 @@
         // After text finishes, show rabbit after a pause
         setTimeout(() => {
           rabbitEl.classList.remove("hidden");
+          startRabbitFlip();
         }, 1500);
       }
+    }
+
+    function startRabbitFlip() {
+      setInterval(() => {
+        if (rabbitText.textContent === "Follow the White Rabbit...") {
+          rabbitText.textContent = "Click Me";
+          rabbitText.classList.add("glow");
+        } else {
+          rabbitText.textContent = "Follow the White Rabbit...";
+          rabbitText.classList.remove("glow");
+        }
+      }, 2500);
     }
 
     function matrixHasYou() {

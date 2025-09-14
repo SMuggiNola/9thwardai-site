@@ -13,28 +13,35 @@
     }
     h1 {
       font-size: 2em;
-      margin-bottom: 0.5em;
     }
-    p {
-      max-width: 600px;
-      line-height: 1.6;
+    .question {
+      margin-bottom: 1.5em;
     }
-    nav {
-      margin-top: 1.5em;
-      margin-bottom: 2em;
+    .choices label {
+      display: block;
+      margin-left: 1em;
     }
-    nav a {
-      display: inline-block;
-      margin-right: 1em;
-      text-decoration: none;
+    button {
+      margin-top: 2em;
+      padding: 0.7em 1.5em;
+      background: #00ff99;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    button:hover {
+      background: black;
       color: #00ff99;
       border: 1px solid #00ff99;
-      padding: 0.5em 1em;
-      transition: background 0.3s, color 0.3s;
     }
-    nav a:hover {
-      background: #00ff99;
-      color: black;
+    .correct {
+      color: lime;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: red;
+      font-weight: bold;
     }
     footer {
       margin-top: 2em;
@@ -57,18 +64,56 @@
   </header>
 
   <main>
-    <p>
-      This page will soon host interactive <strong>Mini Math ACT Practice</strong> activities.  
-      Students will be able to test themselves with randomized practice questions  
-      that rotate every few days, with instant feedback.
-    </p>
+    <form id="quiz-form">
+      <div class="question">
+        <p>1) What is 2 + 2 ?</p>
+        <div class="choices">
+          <label><input type="radio" name="q1" value="A"> A) 3</label>
+          <label><input type="radio" name="q1" value="B"> B) 4</label>
+          <label><input type="radio" name="q1" value="C"> C) 5</label>
+          <label><input type="radio" name="q1" value="D"> D) 22</label>
+          <label><input type="radio" name="q1" value="E"> E) None of these</label>
+        </div>
+      </div>
 
-    <p><em>🚧 Under construction — check back soon!</em></p>
+      <!-- Add more questions here following the same pattern -->
+
+      <button type="button" onclick="checkAnswers()">Submit</button>
+    </form>
+
+    <div id="results"></div>
   </main>
 
   <footer>
-    <p>MIT License — You are free to use, share, and adapt the materials on this site, but please give credit to <strong>9th Ward AI</strong> when doing so.</p>
+    <p>MIT License — Please credit <strong>9th Ward AI</strong> when reusing materials.</p>
     <p>Content curated, created, and arranged by <strong>Sean Muggivan, LCSW</strong>.</p>
   </footer>
+
+  <script>
+    const correctAnswers = {
+      q1: "B" // correct for Q1 = 4
+      // Add more answers here: q2: "D", q3: "A", etc.
+    };
+
+    function checkAnswers() {
+      let results = "";
+      let score = 0;
+      for (const q in correctAnswers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected) {
+          if (selected.value === correctAnswers[q]) {
+            results += `<p>${q}: <span class="correct">Correct ✔</span></p>`;
+            score++;
+          } else {
+            results += `<p>${q}: <span class="incorrect">Incorrect ✘</span></p>`;
+          }
+        } else {
+          results += `<p>${q}: <span class="incorrect">No answer ✘</span></p>`;
+        }
+      }
+      results += `<p><strong>Score: ${score} / ${Object.keys(correctAnswers).length}</strong></p>`;
+      document.getElementById("results").innerHTML = results;
+    }
+  </script>
 </body>
 </html>
