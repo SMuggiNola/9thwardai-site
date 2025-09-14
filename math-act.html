@@ -14,6 +14,14 @@
     h1 {
       font-size: 2em;
     }
+    nav a {
+      margin-right: 1.5em;
+      color: #00ff99;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
     .question {
       margin-bottom: 1.5em;
     }
@@ -34,14 +42,6 @@
       background: black;
       color: #00ff99;
       border: 1px solid #00ff99;
-    }
-    .correct {
-      color: lime;
-      font-weight: bold;
-    }
-    .incorrect {
-      color: red;
-      font-weight: bold;
     }
     footer {
       margin-top: 2em;
@@ -64,23 +64,13 @@
   </header>
 
   <main>
-    <form id="quiz-form">
-      <div class="question">
-        <p>1) What is 2 + 2 ?</p>
-        <div class="choices">
-          <label><input type="radio" name="q1" value="A"> A) 3</label>
-          <label><input type="radio" name="q1" value="B"> B) 4</label>
-          <label><input type="radio" name="q1" value="C"> C) 5</label>
-          <label><input type="radio" name="q1" value="D"> D) 22</label>
-          <label><input type="radio" name="q1" value="E"> E) None of these</label>
-        </div>
-      </div>
+    <section id="login">
+      <p><strong>Enter your school email to begin:</strong></p>
+      <input type="email" id="studentEmail" placeholder="you@example.com" style="width:300px;">
+      <button onclick="startQuiz()">Start Quiz</button>
+    </section>
 
-      <!-- Add more questions here following the same pattern -->
-
-      <button type="button" onclick="checkAnswers()">Submit</button>
-    </form>
-
+    <form id="quizForm" style="display:none;"></form>
     <div id="results"></div>
   </main>
 
@@ -90,29 +80,85 @@
   </footer>
 
   <script>
-    const correctAnswers = {
-      q1: "B" // correct for Q1 = 4
-      // Add more answers here: q2: "D", q3: "A", etc.
-    };
+    let studentEmail = "";
+    let batchId = "";
 
-    function checkAnswers() {
-      let results = "";
-      let score = 0;
-      for (const q in correctAnswers) {
-        const selected = document.querySelector(`input[name="${q}"]:checked`);
-        if (selected) {
-          if (selected.value === correctAnswers[q]) {
-            results += `<p>${q}: <span class="correct">Correct ✔</span></p>`;
-            score++;
-          } else {
-            results += `<p>${q}: <span class="incorrect">Incorrect ✘</span></p>`;
-          }
-        } else {
-          results += `<p>${q}: <span class="incorrect">No answer ✘</span></p>`;
-        }
+    async function startQuiz() {
+      studentEmail = document.getElementById("studentEmail").value.trim();
+      if (!studentEmail) {
+        alert("Please enter your email first.");
+        return;
       }
-      results += `<p><strong>Score: ${score} / ${Object.keys(correctAnswers).length}</strong></p>`;
-      document.getElementById("results").innerHTML = results;
+
+      const res = await fetch("/math-act/questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ student_id: studentEmail })
+      });
+      const data = await res.json();
+
+      batchId = data.batch_id;
+      renderQuestions(data.questions, data.message);
+    }
+
+    function renderQuestions(questions, message) {
+      const form = document.getElementById("quizForm");
+      form.style.display = "block";
+      form.innerHTML = "";
+      document.getElementById("results").innerHTML = `<p>${message}</p>`;
+
+      questions.forEach((q, idx) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${idx+1}) ${q.prompt}</p>`;
+
+        const choicesDiv = document.createElement("div");
+        choicesDiv.className = "choices";
+
+        ["a","b","c","d","e"].forEach((letter, i) => {
+          if (q["choice_"+letter]) {
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="radio" name="${q.id}" value="${String.fromCharCode(65+i)}"> ${String.fromCharCode(65+i)}) ${q["choice_"+letter]}`;
+            choicesDiv.appendChild(label);
+          }
+        });
+
+        div.appendChild(choicesDiv);
+        form.appendChild(div);
+      });
+
+      const btn = document.createElement("button");
+      btn.type = "submit";
+      btn.textContent = "Submit Answers";
+      form.appendChild(btn);
+
+      form.onsubmit = submitAnswers;
+    }
+
+    async function submitAnswers(e) {
+      e.preventDefault();
+      const answers = {};
+      const inputs = document.querySelectorAll("input[type=radio]:checked");
+      inputs.forEach(input => {
+        answers[input.name] = input.value;
+      });
+
+      const res = await fetch("/math-act/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ student_id: studentEmail, answers })
+      });
+      const data = await res.json();
+
+      let output = `<h3>Your Score: ${data.score ?? "N/A"}</h3>`;
+      if (data.summary) {
+        output += `<p>${data.summary.join("<br>")}</p>`;
+      }
+      if (data.message) {
+        output += `<p><em>${data.message}</em></p>`;
+      }
+
+      document.getElementById("results").innerHTML = output;
     }
   </script>
 </body>
