@@ -113,7 +113,7 @@ async function fetchBatch(batchId, env, message) {
     `SELECT id, prompt, choice_a, choice_b, choice_c, choice_d, choice_e
      FROM questions WHERE id IN (${placeholders})`
   );
-  const { results } = await stmt.all(...ids);
+  const { results } = await stmt.bind(...ids).all();   // ✅ FIXED
 
   return new Response(JSON.stringify({
     batch_id: batchId,
@@ -174,14 +174,12 @@ async function submitAnswers(request, env) {
   const stmt = env.DB.prepare(
     `SELECT id, correct_choice, skill FROM questions WHERE id IN (${placeholders})`
   );
-  const { results } = await stmt.all(...ids);
+  const { results } = await stmt.bind(...ids).all();   // ✅ FIXED
 
   let score = 0;
   const missedSkills = new Set();
-
   for (const row of results) {
-    const studentAnswer = answers[row.id.toString()]; // FIX: force string key
-    if (studentAnswer === row.correct_choice) {
+    if (answers[row.id] === row.correct_choice) {
       score++;
     } else {
       missedSkills.add(row.skill);
@@ -266,7 +264,7 @@ async function listQuestions(url, env) {
     `SELECT id, prompt, choice_a, choice_b, choice_c, choice_d, choice_e, correct_choice, skill
      FROM questions WHERE id IN (${placeholders})`
   );
-  const { results } = await stmt.all(...ids);
+  const { results } = await stmt.bind(...ids).all();   // ✅ FIXED
 
   return new Response(JSON.stringify({ batch_id, questions: results }), {
     headers: { "Content-Type": "application/json" },
