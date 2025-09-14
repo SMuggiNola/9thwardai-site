@@ -219,3 +219,16 @@ pre {
   overflow: auto;
   margin-left: 0;
 }
+body, h1, h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  margin-bottom: 0;  /* remove gap under header */
+  padding: 1em 0;    /* keep a little breathing room if you want */
+}
+
+main {
+  margin-top: 0;     /* container will hug header */
+}

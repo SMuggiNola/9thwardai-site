@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Future Fridays</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      background: black;
+      color: #00ff99;
+      font-family: "Courier New", monospace;
+      margin: 20px;
+      overflow-x: hidden;
+    }
+
+    header h1 {
+      text-align: center;
+      color: #00ff99;
+      text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff99;
+      margin-bottom: 0.5em;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 2em;
+    }
+
+    nav a {
+      color: #00ff99;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      border: 1px solid #00ff99;
+      border-radius: 6px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    nav a:hover {
+      background: #00ff99;
+      color: black;
+      text-shadow: none;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.4em;
+      margin-bottom: 1.5em;
+      text-shadow: 0 0 5px #00ff99;
+    }
+
+    .ff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2em;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .article-btn {
+      display: block;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #00ff99;
+      color: #00ff99;
+      padding: 1.2em;
+      border-radius: 12px;
+      font-size: 1em;
+      text-align: center;
+      text-decoration: none;
+      text-shadow: 0 0 5px #00ff99;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .article-btn:hover {
+      background: #00ff99;
+      color: black;
+      text-shadow: none;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 2em;
+      text-align: center;
+      font-size: 0.85em;
+      color: #00ff99;
+      border-top: 1px solid #00ff99;
+      padding-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix background -->
+  <canvas id="matrix"></canvas>
+  <script src="../matrix.js"></script>
+
+  <header>
+    <h1>Future Fridays</h1>
+    <nav>
+      <a href="../NHH-Data-Sci.html">☎️ Back to NHH Data Sci & AI Lab</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Choose an Article</h2>
+      <div class="ff-grid">
+        <a href="grok.html" class="article-btn">🌀 Grok Offers Bizarre Explanations</a>
+        <a href="robots.html" class="article-btn">🤖 Humanoid Robots Are Beating Each Other to Pulp</a>
+        <a href="small-detail.html" class="article-btn">🔍 AI Industry Nervous About Small Detail</a>
+        <a href="ai-bubble.html" class="article-btn">☁️ Beneath the AI Bubble</a>
+        <a href="fumes.html" class="article-btn">🏭 Community Complains of Choking Fumes</a>
+        <a href="google-melting.html" class="article-btn">🔥 Google Puzzled as Its AI Keeps Melting Down</a>
+        <a href="electricity.html" class="article-btn">⚡ How Much Electricity?</a>
+        <a href="struggling.html" class="article-btn">📉 Leading AI Companies Struggling</a>
+        <a href="sam-altman.html" class="article-btn">😠 Sam Altman Calls His Own AI Model Annoying</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 9thwardai.net</p>
+  </footer>
+</body>
+</html>

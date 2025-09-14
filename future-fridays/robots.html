@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🤖 Future Fridays – Humanoid Robots</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      background: black;
+      color: #00ff99;
+      font-family: "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      margin: 0;
+      padding: 0.3em 0; /* tightened */
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      text-shadow: 0 0 5px #00ff99;
+    }
+
+    nav {
+      margin: 0.3em 0; /* tightened */
+    }
+
+    nav a {
+      color: #00ff99;
+      text-decoration: none;
+      padding: 0.4em 0.8em;
+      border: 1px solid #00ff99;
+      border-radius: 6px;
+    }
+
+    nav a:hover {
+      background: #00ff99;
+      color: black;
+    }
+
+    .article img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 1em 0; 
+      border-bottom: 2px solid #00ff99;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0.5em 0; /* less space above container */
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid #00ff99;
+      border-radius: 8px;
+      padding: 1.2em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .article {
+      margin-bottom: 2em;
+      line-height: 1.6em;
+      text-align: left;
+    }
+
+    .article h2 {
+      text-align: right;
+      margin: 0;
+      text-shadow: 0 0 6px #00ff99;
+    }
+
+    .article p {
+  margin: 0 0 1em 0;  /* top=0, right=0, bottom=1em, left=0 */
+}
+
+
+    .question {
+      margin: 1.2em 0;
+    }
+
+    .choices label {
+      display: block;
+      margin-left: 1.2em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      margin-top: 0.5em;
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
+      padding: 0.5em;
+      font-family: inherit;
+    }
+
+    input[type="email"] {
+      padding: 0.5em;
+      margin-top: 1em;
+      border: 1px solid #00ff99;
+      background: black;
+      color: #00ff99;
+      font-family: inherit;
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button {
+      margin: 1.2em auto;
+      padding: 0.7em 1.5em;
+      background: #00ff99;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      font-family: inherit;
+      display: block;
+    }
+
+    button:hover {
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
+    }
+
+    #results {
+      margin-top: 1.2em;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85em;
+      color: #00ff99;
+      border-top: 1px solid #00ff99;
+      padding: 0.6em;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix background -->
+  <canvas id="matrix" style="position:fixed; top:0; left:0; z-index:0;"></canvas>
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({length: columns}, () => Math.random() * -100);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff99";
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 90);
+  </script>
+
+  <header>
+    <h1>Future Fridays</h1>
+    <nav>
+      <a href="index.html">⬅ Back to Future Fridays Hub</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="article">
+        <h2>Humanoid Robots Are Beating Each Other to Pulp</h2>
+        <h2>
+            <a href="https://futurism.com/humanoid-robots-fight-club" target="_blank">
+                https://futurism.com/humanoid-robots-fight_club
+                </a>
+            </h2>
+         <h2>Aug 13, 10:43 AM EDT by Noor Al-Sibai</h2>   
+        <!-- Banner moved here -->
+        <img src="robots-banner.png" alt="Robot Fight Club Banner">
+
+        <p>In a tucked-away San Francisco warehouse, four humanoid robots hang out — quite literally, from standalone frames — as they wait for their flesh-and-blood overlords to train them to kill.</p>
+        <p>This robot fight club, called <strong>REK</strong>, is operated by VR entrepreneur Cix Liv. Pilots don VR headsets and slip their arms into combat controllers, then battle each other through avatars — humanoid robots that punch, slap, and even swing swords. It looks like a rough alpha version of “Real Steel” meets “Street Fighter.”</p>
+        <p>Liv envisions REK becoming “the next UFC,” with leagues, championships, and live-streamed bouts. He believes audiences are hungry for a new form of entertainment where human skill meets robotic embodiment. Instead of buying a house, he poured his savings into robots and the setup for this underground fight club.</p>
+        <p>During early testing, however, problems became clear. One of the bots — nicknamed <em>boyDeREK</em> — began thrashing violently when its feet weren’t planted on the ground, tearing part of the support crane. REK CTO Amanda Watson laughed it off: “DeREK’s a lover, not a fighter.”</p>
+        <p>
+          <a href="https://twitter.com/i/status/1946648610940367008" target="_blank">
+        https://twitter.com/i/status/1946648610940367008
+        </a>
+        </p>
+
+        <p>The vision remains ambitious: Liv wants to see arenas full of people watching pilots embody robots as they clash in matches that combine martial arts with mecha brawling. He imagines a future where REK robots compete in worldwide leagues, creating a hybrid of esports and combat sports — but with bruised robots instead of humans.</p>
+      </section>
+
+      <form id="quiz">
+        <div class="question">
+          <p>1. What does Cix Liv envision REK becoming?</p>
+          <div class="choices">
+            <label><input type="radio" name="q1" value="A"> A) The next Formula 1 racing league</label>
+            <label><input type="radio" name="q1" value="B"> B) The next Ultimate Fighting Championship</label>
+            <label><input type="radio" name="q1" value="C"> C) A robot ballet company</label>
+            <label><input type="radio" name="q1" value="D"> D) A VR home fitness program</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <p>2. What technology do human "pilots" use to control the robots in REK?</p>
+          <div class="choices">
+            <label><input type="radio" name="q2" value="A"> A) Brain implants and haptic gloves</label>
+            <label><input type="radio" name="q2" value="B"> B) Voice commands and laser pointers</label>
+            <label><input type="radio" name="q2" value="C"> C) VR headsets and arm-worn combat controllers</label>
+            <label><input type="radio" name="q2" value="D"> D) Standard Xbox controllers</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <p>3. What caused the robot "boyDeREK" to thrash violently?</p>
+          <div class="choices">
+            <label><input type="radio" name="q3" value="A"> A) A faulty AI combat script</label>
+            <label><input type="radio" name="q3" value="B"> B) Its “feet” not touching the ground</label>
+            <label><input type="radio" name="q3" value="C"> C) Overheating from prolonged use</label>
+            <label><input type="radio" name="q3" value="D"> D) Malicious hacking from a rival team</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <p>4. What did Amanda Watson jokingly say about DeREK?</p>
+          <div class="choices">
+            <label><input type="radio" name="q4" value="A"> A) That it’s a lover, not a fighter</label>
+            <label><input type="radio" name="q4" value="B"> B) That it needs anger management training</label>
+            <label><input type="radio" name="q4" value="C"> C) That it should stick to wrestling</label>
+            <label><input type="radio" name="q4" value="D"> D) That it was auditioning for a sci-fi movie</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <p>5. Instead of buying a house, what did Liv choose to invest in?</p>
+          <div class="choices">
+            <label><input type="radio" name="q5" value="A"> A) More VR companies</label>
+            <label><input type="radio" name="q5" value="B"> B) Robots for the fight club</label>
+            <label><input type="radio" name="q5" value="C"> C) A BattleBots franchise</label>
+            <label><input type="radio" name="q5" value="D"> D) A tech startup accelerator</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <p>Short Answer 1: Describe two specific elements Liv is incorporating into REK’s design or presentation. (approx 2-3 complete sentences)</p>
+          <textarea name="sa1"></textarea>
+        </div>
+
+        <div class="question">
+          <p>Short Answer 2: What two details describe the incident involving DeREK’s thrashing? (approx 2-3 complete sentences)</p>
+          <textarea name="sa2"></textarea>
+        </div>
+
+        <input type="email" id="student-email" placeholder="Enter your school email" required>
+        <button type="button" onclick="submitQuiz()">Submit</button>
+      </form>
+
+      <div id="results"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 9thwardai.net</p>
+  </footer>
+
+  <script>
+    async function submitQuiz() {
+      const studentId = document.getElementById("student-email").value;
+      if (!studentId) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      const formData = new FormData(document.getElementById("quiz"));
+      const answers = {};
+      formData.forEach((value, key) => { answers[key] = value; });
+
+      const res = await fetch("https://humanoid-robot-worker.sean-muggivan.workers.dev/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          student_id: studentId,
+          article_id: "robots",
+          answers
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById("results").innerHTML =
+        `<h2>Submission Saved</h2><p>${data.message}</p>`;
+    }
+  </script>
+</body>
+</html>
