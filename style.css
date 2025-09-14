@@ -185,3 +185,25 @@ details[open] summary::before {
   color: black;
   box-shadow: 0 0 20px #00ff99;
 }
+/* Force article buttons to look like neon blocks, not blue links */
+.article-btn {
+  width: 80%;
+  min-height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.8em;
+  border: 2px solid #00ff99;
+  color: #00ff99 !important;   /* override browser link blue */
+  text-decoration: none !important;
+  font-size: 1.3em;
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.article-btn:hover {
+  background: #00ff99;
+  color: black !important;
+  box-shadow: 0 0 15px #00ff99;
+}
