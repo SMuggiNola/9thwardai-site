@@ -13,14 +13,7 @@
     }
     h1 {
       font-size: 2em;
-    }
-    nav a {
-      margin-right: 1.5em;
-      color: #00ff99;
-      text-decoration: none;
-    }
-    nav a:hover {
-      text-decoration: underline;
+      text-align: center;
     }
     .question {
       margin-bottom: 1.5em;
@@ -43,6 +36,9 @@
       color: #00ff99;
       border: 1px solid #00ff99;
     }
+    #quiz, #results {
+      margin-top: 2em;
+    }
     footer {
       margin-top: 2em;
       border-top: 1px solid #00ff99;
@@ -51,26 +47,35 @@
       text-align: center;
       color: #00ff99;
     }
+    input[type="email"] {
+      padding: 0.5em;
+      font-family: inherit;
+      border: 1px solid #00ff99;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>➗ Mini Math ACT Practice</h1>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="resources.html">Resource Library</a>
+    <nav style="text-align:center; margin-bottom:2em;">
+      <a href="home.html">Home</a> |
+      <a href="resources.html">Resource Library</a> |
       <a href="math-act.html">Mini Math ACT Practice</a>
     </nav>
   </header>
 
   <main>
-    <section id="login">
-      <p><strong>Enter your school email to begin:</strong></p>
-      <input type="email" id="studentEmail" placeholder="you@example.com" style="width:300px;">
+    <!-- Step 1: Email input -->
+    <div id="email-step">
+      <p>Enter your school email to begin:</p>
+      <input type="email" id="student-email" placeholder="you@example.com" required>
       <button onclick="startQuiz()">Start Quiz</button>
-    </section>
+    </div>
 
-    <form id="quizForm" style="display:none;"></form>
+    <!-- Step 2: Quiz questions -->
+    <form id="quiz" style="display:none;"></form>
+
+    <!-- Step 3: Results -->
     <div id="results"></div>
   </main>
 
@@ -80,85 +85,85 @@
   </footer>
 
   <script>
-    let studentEmail = "";
-    let batchId = "";
+    let batchId = null;
+    let studentId = null;
+    let questions = [];
 
     async function startQuiz() {
-      studentEmail = document.getElementById("studentEmail").value.trim();
-      if (!studentEmail) {
-        alert("Please enter your email first.");
+      studentId = document.getElementById("student-email").value;
+      if (!studentId) {
+        alert("Please enter your email.");
         return;
       }
 
+      // Request questions from Worker
       const res = await fetch("/math-act/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ student_id: studentEmail })
+        body: JSON.stringify({ student_id: studentId })
       });
       const data = await res.json();
 
+      if (data.error) {
+        alert(data.message || "Error starting quiz.");
+        return;
+      }
+
       batchId = data.batch_id;
-      renderQuestions(data.questions, data.message);
+      questions = data.questions;
+      renderQuestions();
     }
 
-    function renderQuestions(questions, message) {
-      const form = document.getElementById("quizForm");
-      form.style.display = "block";
-      form.innerHTML = "";
-      document.getElementById("results").innerHTML = `<p>${message}</p>`;
+    function renderQuestions() {
+      document.getElementById("email-step").style.display = "none";
+      const quizForm = document.getElementById("quiz");
+      quizForm.style.display = "block";
+      quizForm.innerHTML = "";
 
       questions.forEach((q, idx) => {
         const div = document.createElement("div");
         div.className = "question";
-        div.innerHTML = `<p>${idx+1}) ${q.prompt}</p>`;
-
-        const choicesDiv = document.createElement("div");
-        choicesDiv.className = "choices";
-
-        ["a","b","c","d","e"].forEach((letter, i) => {
-          if (q["choice_"+letter]) {
-            const label = document.createElement("label");
-            label.innerHTML = `<input type="radio" name="${q.id}" value="${String.fromCharCode(65+i)}"> ${String.fromCharCode(65+i)}) ${q["choice_"+letter]}`;
-            choicesDiv.appendChild(label);
-          }
-        });
-
-        div.appendChild(choicesDiv);
-        form.appendChild(div);
+        div.innerHTML = `<p>${idx + 1}) ${q.prompt}</p>
+          <div class="choices">
+            <label><input type="radio" name="${q.id}" value="A"> A) ${q.choice_a}</label>
+            <label><input type="radio" name="${q.id}" value="B"> B) ${q.choice_b}</label>
+            <label><input type="radio" name="${q.id}" value="C"> C) ${q.choice_c}</label>
+            <label><input type="radio" name="${q.id}" value="D"> D) ${q.choice_d}</label>
+            <label><input type="radio" name="${q.id}" value="E"> E) ${q.choice_e}</label>
+          </div>`;
+        quizForm.appendChild(div);
       });
 
-      const btn = document.createElement("button");
-      btn.type = "submit";
-      btn.textContent = "Submit Answers";
-      form.appendChild(btn);
-
-      form.onsubmit = submitAnswers;
+      const submitBtn = document.createElement("button");
+      submitBtn.type = "button";
+      submitBtn.textContent = "Submit Answers";
+      submitBtn.onclick = submitQuiz;
+      quizForm.appendChild(submitBtn);
     }
 
-    async function submitAnswers(e) {
-      e.preventDefault();
+    async function submitQuiz() {
       const answers = {};
-      const inputs = document.querySelectorAll("input[type=radio]:checked");
-      inputs.forEach(input => {
-        answers[input.name] = input.value;
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        if (selected) {
+          answers[q.id] = selected.value;
+        }
       });
 
       const res = await fetch("/math-act/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ student_id: studentEmail, answers })
+        body: JSON.stringify({ student_id: studentId, answers })
       });
       const data = await res.json();
 
-      let output = `<h3>Your Score: ${data.score ?? "N/A"}</h3>`;
-      if (data.summary) {
-        output += `<p>${data.summary.join("<br>")}</p>`;
-      }
-      if (data.message) {
-        output += `<p><em>${data.message}</em></p>`;
-      }
-
-      document.getElementById("results").innerHTML = output;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `
+        <h2>Your Results</h2>
+        <p>Score: ${data.score}</p>
+        <ul>${data.summary.map(s => `<li>${s}</li>`).join("")}</ul>
+        <p>${data.message || ""}</p>
+      `;
     }
   </script>
 </body>
