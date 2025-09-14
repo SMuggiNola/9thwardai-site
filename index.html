@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Wake up NHH...</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background: black;
@@ -13,105 +12,204 @@
       overflow: hidden;
     }
 
+    /* --------------------------
+       SCROLLING NEWSPAPER BACKGROUND
+    -------------------------- */
+    #news-scroll {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("news.png") repeat-y center top;
+      background-size: cover;
+      filter: grayscale(100%) contrast(180%) brightness(70%) sepia(100%) hue-rotate(90deg);
+      image-rendering: pixelated;
+      opacity: 0.3;
+      animation: scrollNews 3s linear forwards;
+      z-index: -2;
+    }
+    @keyframes scrollNews {
+      from { background-position-y: 0; opacity: 0.3; }
+      to   { background-position-y: -1000px; opacity: 0; }
+    }
+
+    /* CRT scanlines */
+    #scanlines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0px,
+        rgba(0, 0, 0, 0.3) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      z-index: -1;
+      animation: fadeOut 0.5s ease 3s forwards;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+
+    /* --------------------------
+       TYPING EFFECT
+    -------------------------- */
     .typing {
       font-size: 1.5em;
       white-space: pre-wrap;
       border-right: 2px solid #00ff99;
       animation: blink 0.7s step-end infinite;
+      position: relative;
+      z-index: 10;
+      display: none;
     }
-
     @keyframes blink {
       from, to { border-color: transparent; }
       50% { border-color: #00ff99; }
     }
 
-    .hidden {
-      display: none;
-    }
-
+    /* --------------------------
+       RABBIT
+    -------------------------- */
     .rabbit-container {
       position: fixed;
       bottom: 20px;
       right: 20px;
       text-align: center;
+      z-index: 9999;
+      display: none;
+      cursor: pointer;
     }
-
     .rabbit-text {
       font-size: 0.9em;
       margin-bottom: 0.3em;
       transition: text-shadow 0.5s;
     }
-
-    /* Glow effect when text is "Click Me" */
     .glow {
       color: #00ff99;
       text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99, 0 0 40px #00ff99;
     }
-
     .rabbit {
       font-size: 5em;
       display: inline-block;
       color: white;
       text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99;
-      transform: scaleX(-1); /* makes rabbit face right */
-      cursor: pointer;
+      transform: scaleX(-1);
       transition: transform 0.2s ease, text-shadow 0.2s ease;
     }
-
     .rabbit:hover {
       transform: scaleX(-1) scale(1.1);
       text-shadow: 0 0 20px #00ff99, 0 0 40px #00ff99;
     }
 
-    /* Matrix Has You effect */
-    #matrix-message {
+    /* --------------------------
+       FINAL SPLASH (SYSTEM FAILURE)
+    -------------------------- */
+    #final-splash {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.1);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00ff99;
       font-size: 2em;
       opacity: 0;
-      transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-      white-space: nowrap;
-      text-align: center;
+      transform: scale(0.1);
+      z-index: 100;
     }
-    #matrix-message.show {
-      transform: translate(-50%, -50%) scale(3);
-      opacity: 1;
-      text-shadow: 0 0 15px #00ff99, 0 0 30px #00ff99, 0 0 60px #00ff99;
+    #final-splash.show {
+      animation: growGlitch 3.5s ease forwards; /* slowed down */
+    }
+    @keyframes growGlitch {
+      0%   { opacity: 0; transform: scale(0.1); }
+      30%  { opacity: 1; transform: scale(1.5) rotate(1deg); text-shadow: 0 0 5px #00ff99, 0 0 15px #00ff99; }
+      50%  { transform: scale(2.5) rotate(-2deg); text-shadow: 0 0 10px red, 0 0 20px lime; }
+      70%  { transform: scale(2) rotate(1deg); text-shadow: 0 0 5px #00ff99, 0 0 25px #00ff99; }
+      100% { opacity: 1; transform: scale(2) rotate(0deg); }
+    }
+
+    /* --------------------------
+       CRT SHUTDOWN EFFECT
+    -------------------------- */
+    #crt-flash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #00ff99;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #crt-flash.flash {
+      animation: tvOff 2s ease forwards;
+    }
+    @keyframes tvOff {
+      0%   { opacity: 1; transform: scale(1); }
+      50%  { opacity: 1; transform: scaleY(0.05); }
+      70%  { opacity: 1; transform: scaleY(0.02) scaleX(1.2); }
+      100% { opacity: 0; transform: scaleY(0) scaleX(0); }
     }
   </style>
 </head>
 <body>
+  <!-- Stage 1 -->
+  <div id="news-scroll"></div>
+  <div id="scanlines"></div>
+
+  <!-- Stage 2/3 -->
   <div id="message" class="typing"></div>
 
-  <div id="rabbit" class="hidden rabbit-container">
+  <!-- Rabbit -->
+  <div id="rabbit" class="rabbit-container">
     <div id="rabbit-text" class="rabbit-text">Follow the White Rabbit...</div>
-    <div class="rabbit" onclick="matrixHasYou()">🐇</div>
+    <div class="rabbit">🐇</div>
   </div>
 
-  <div id="matrix-message">THE MATRIX HAS YOU...</div>
+  <!-- Stage 4 -->
+  <div id="final-splash">☠ SYSTEM FAILURE ☠</div>
+
+  <!-- CRT Flash Layer -->
+  <div id="crt-flash"></div>
 
   <script>
-    const text = "Wake up NHH...";
-    let i = 0;
-    const speed = 120; // typing speed in ms
+    const messages = [
+      "Wake up, NHH...",
+      "The Matrix has you..."
+    ];
+    let i = 0, msgIndex = 0;
+    const speed = 120; // typing unchanged
     const messageEl = document.getElementById("message");
     const rabbitEl = document.getElementById("rabbit");
     const rabbitText = document.getElementById("rabbit-text");
-    const matrixMsg = document.getElementById("matrix-message");
+    const finalSplash = document.getElementById("final-splash");
+    const crtFlash = document.getElementById("crt-flash");
+
+    // Start typing after 3s
+    setTimeout(() => {
+      messageEl.style.display = "block";
+      typeWriter();
+    }, 3000);
 
     function typeWriter() {
-      if (i < text.length) {
-        messageEl.textContent += text.charAt(i);
+      if (i < messages[msgIndex].length) {
+        messageEl.textContent += messages[msgIndex].charAt(i);
         i++;
         setTimeout(typeWriter, speed);
       } else {
-        // After text finishes, show rabbit after a pause
-        setTimeout(() => {
-          rabbitEl.classList.remove("hidden");
-          startRabbitFlip();
-        }, 1500);
+        if (msgIndex < messages.length - 1) {
+          msgIndex++;
+          i = 0;
+          setTimeout(() => { messageEl.textContent = ""; typeWriter(); }, 1200);
+        } else {
+          setTimeout(() => {
+            rabbitEl.style.display = "block";
+            startRabbitFlip();
+          }, 1500);
+        }
       }
     }
 
@@ -128,14 +226,24 @@
     }
 
     function matrixHasYou() {
-      matrixMsg.classList.add("show");
-      // After effect, redirect
+      messageEl.style.display = "none";
+      rabbitEl.style.display = "none";
+      finalSplash.classList.add("show");
+
+      // Start CRT flash after glitch
+      setTimeout(() => {
+        crtFlash.classList.add("flash");
+      }, 3500); // glitch = 3.5s
+
+      // Redirect after CRT finishes + 2s pause
       setTimeout(() => {
         window.location.href = "home.html";
-      }, 1800);
+      }, 7700); // 3.5s glitch + 2s CRT + 2s black pause
     }
 
-    typeWriter();
+    document.addEventListener("DOMContentLoaded", () => {
+      rabbitEl.addEventListener("click", matrixHasYou);
+    });
   </script>
 </body>
 </html>
