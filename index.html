@@ -2,31 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>9th Ward AI</title>
+  <title>Wake up Neo...</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: black;
+      color: #00ff99;
+      font-family: "Courier New", monospace;
+      margin: 20px;
+    }
+
+    .typing {
+      font-size: 1.5em;
+      white-space: pre-wrap;
+      border-right: 2px solid #00ff99;
+      animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #00ff99; }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .rabbit-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      text-align: center;
+    }
+
+    .rabbit-text {
+      font-size: 0.9em;
+      margin-bottom: 0.3em;
+    }
+
+    .rabbit {
+      font-size: 5em;
+      display: inline-block;
+      color: white;
+      text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99;
+      transform: scaleX(-1); /* makes rabbit face right */
+      cursor: pointer;
+      transition: transform 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .rabbit:hover {
+      transform: scaleX(-1) scale(1.1);
+      text-shadow: 0 0 20px #00ff99, 0 0 40px #00ff99;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-  <script src="matrix.js"></script>
+  <div id="message" class="typing"></div>
 
-  <header>
-    <h1>Welcome to 9th Ward AI</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="resources.html">Slideshows</a>
-      <a href="#">Mini Math ACT Practice</a>
-    </nav>
-  </header>
+  <div id="rabbit" class="hidden rabbit-container">
+    <div class="rabbit-text">Follow the White Rabbit...</div>
+    <a href="home.html" class="rabbit">🐇</a>
+  </div>
 
-  <main>
-    <section>
-      <h2>Our Mission</h2>
-      <p>This site supports data-driven learning with AI and offline-first tools.</p>
-    </section>
-  </main>
+  <script>
+    const text = "Wake up Neo...";
+    let i = 0;
+    const speed = 120; // typing speed in ms
+    const messageEl = document.getElementById("message");
+    const rabbitEl = document.getElementById("rabbit");
 
-  <footer>
-    <p>&copy; 2025 9thwardai.net</p>
-  </footer>
+    function typeWriter() {
+      if (i < text.length) {
+        messageEl.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        // After text finishes, show rabbit after a pause
+        setTimeout(() => {
+          rabbitEl.classList.remove("hidden");
+        }, 1500);
+      }
+    }
+
+    typeWriter();
+  </script>
 </body>
 </html>
