@@ -1,0 +1,88 @@
+/* Matrix-style global theme */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Courier New", monospace;
+  background: black;
+  color: #00ff99; /* neon green */
+  line-height: 1.6;
+}
+
+/* Header and nav */
+header {
+  background: #000;
+  text-align: center;
+  padding: 1.5em;
+  border-bottom: 2px solid #00ff99;
+}
+
+header h1 {
+  font-size: 2.5em;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00ff99;
+}
+
+nav a {
+  margin: 0 1em;
+  color: #00ff99;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-shadow: 0 0 10px #00ff99;
+}
+
+/* Matrix "code rain" background canvas */
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* keep it behind content */
+  background: black;
+}
+
+/* Resource Library styling */
+section {
+  margin: 2em auto;
+  max-width: 900px;
+  padding: 1.5em;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #00ff99;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #00ff99;
+}
+
+h2 {
+  border-bottom: 1px solid #00ff99;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 0.5em 0;
+}
+
+ul li a {
+  color: #00ff99;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-shadow: 0 0 5px #00ff99;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1em;
+  border-top: 2px solid #00ff99;
+  margin-top: 2em;
+}
