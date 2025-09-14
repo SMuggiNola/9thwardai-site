@@ -2,15 +2,15 @@ export default {
   async fetch(request: Request, env: any): Promise<Response> {
     const url = new URL(request.url);
 
-    // Handle quiz submission
+    // Handle quiz submissions
     if (request.method === "POST" && url.pathname === "/submit") {
       try {
-        const data = await request.json();
+        const data: any = await request.json(); // 👈 cast to any to avoid TS error
 
-        // Unique key for each submission
+        // Create a unique key using timestamp + student_id
         const key = `${Date.now()}_${data.student_id || "unknown"}`;
 
-        // Save submission in KV
+        // Save the submission in KV
         await env.SUBMISSIONS.put(key, JSON.stringify(data));
 
         return new Response(
@@ -25,17 +25,19 @@ export default {
       }
     }
 
-    // Teacher-only: retrieve all submissions
+    // Teacher-only endpoint: fetch all submissions
     if (request.method === "GET" && url.pathname === "/submissions") {
       const list = await env.SUBMISSIONS.list();
       const results: any[] = [];
+
       for (const item of list.keys) {
         const value = await env.SUBMISSIONS.get(item.name);
         if (value) {
           results.push(JSON.parse(value));
         }
       }
-      return new Response(JSON.stringify(results), {
+
+      return new Response(JSON.stringify(results, null, 2), {
         headers: { "Content-Type": "application/json" },
       });
     }
