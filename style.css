@@ -44,7 +44,7 @@ nav a:hover {
   background: black;
 }
 
-/* Resource Library styling */
+/* NHH_Data_Sci.html */
 section {
   margin: 2em auto;
   max-width: 900px;
@@ -85,4 +85,103 @@ footer {
   padding: 1em;
   border-top: 2px solid #00ff99;
   margin-top: 2em;
+}
+/* Consistent Section Styling */
+section {
+  width: 80%;
+  min-height: 150px;
+  margin: 2em auto;
+  padding: 1.5em;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #00ff99;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00ff99;
+  text-align: center;
+}
+
+/* Expandable unit headers */
+details summary {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-bottom: 1em;
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Grid layout for slides */
+.slides-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin-top: 1em;
+}
+
+/* Big neon button (Future Fridays etc.) */
+.big-button {
+  display: inline-block;
+  font-size: 1.5em;
+  padding: 1em 2em;
+  border: 2px solid #00ff99;
+  border-radius: 8px;
+  color: #00ff99;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.big-button:hover {
+  background: #00ff99;
+  color: black;
+  box-shadow: 0 0 15px #00ff99;
+}
+details summary {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+details summary::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: #00ff99;
+  transition: transform 0.3s;
+}
+
+details[open] summary::before {
+  content: "▼";
+}
+
+.ff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* fixed 2-column like slides */
+  gap: 2em;
+  margin-top: 1em;
+  max-width: 900px;  /* matches NHH_Data_Sci */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 200px;       /* same size as section cards */
+  padding: 1.5em;
+  border: 1px solid #00ff99;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 15px #00ff99;
+  color: #00ff99;
+  text-decoration: none;
+  font-size: 1.2em;
+  line-height: 1.4;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.article-btn:hover {
+  background: #00ff99;
+  color: black;
+  box-shadow: 0 0 20px #00ff99;
 }
