@@ -1,6 +1,10 @@
--- migrations/003_seed_with_skills.sql
--- Re-seed 30 ACT-style questions with skill tags
+-- Add skill column to questions (if it doesn't exist)
+ALTER TABLE questions ADD COLUMN skill TEXT;
 
+-- Add batch_id column to submissions
+ALTER TABLE submissions ADD COLUMN batch_id TEXT;
+
+-- Re-seed 30 ACT-style questions with skill tags
 DELETE FROM questions;
 
 INSERT INTO questions
