@@ -10,6 +10,8 @@
       font-family: "Courier New", monospace;
       margin: 20px;
     }
+
+    /* Top-right Hardline Home button */
     .hardline-home {
       position: absolute;
       top: 15px;
@@ -24,6 +26,7 @@
       transition: background 0.3s, color 0.3s;
     }
     .hardline-home:hover { background: #00ff99; color: black; }
+
     h1 { margin-top: 2em; }
 
     /* Dropdown box styling */
@@ -64,6 +67,26 @@
     details ul {
       margin-top: 0.5em;
     }
+
+    /* Mini test button styling */
+    .mini-test-btn {
+      display: block;
+      margin: 1em auto;
+      padding: 0.75em 1.5em;
+      border: 2px solid #00ff99;
+      border-radius: 8px;
+      color: #00ff99;
+      text-decoration: none;
+      font-weight: bold;
+      background: black;
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+      width: fit-content;
+    }
+    .mini-test-btn:hover {
+      background: #00ff99;
+      color: black;
+    }
   </style>
 </head>
 <body>
@@ -72,37 +95,37 @@
   <h1>ACT Practice</h1>
   <p>ACT College & Career Readiness practice sections coming soon:</p>
 
-<details>
-  <summary>Math</summary>
-  <p>Mini practice sets like the one you’ve already tested.</p>
+  <details>
+    <summary>Math</summary>
+    <div class="act-prep">
+      <h3>ACT Prep Pathway</h3>
 
-  <div class="act-prep">
-    <h3>ACT Prep Pathway</h3>
+      <!-- Mini Test Button -->
+      <a href="tier1-mini-test.html" class="mini-test-btn">📝 Take Tier 1 Mini Test</a>
 
-    <h4>Tier 1: Essentials Track (Approx. Goal: 23+)</h4>
-    <ul>
-      <li><strong>Focus:</strong> Work on <em>Integrating Essential Skills</em> — fractions, percentages, ratios, slope, linear equations, coordinate plane basics, and interpreting graphs/tables.</li>
-      <li><strong>Rationale:</strong> These questions account for <strong>the largest share of ACT Math</strong> — roughly 25 of the 60 problems (about 40% of the test). Building accuracy here creates the strongest foundation for overall growth.</li>
-      <li><strong>Approach:</strong> Short practice sets with repeated review, emphasizing accuracy and consistency in the most frequently tested skills.</li>
-      <li><strong>Example:</strong> A store marks up the price of a $40 jacket by 25%. During a sale, the store takes 20% off the new price. What is the final price of the jacket?</li>
-    </ul>
+      <h4>Tier 1: Essentials Track (Approx. Goal: 23+)</h4>
+      <ul>
+        <li><strong>Focus:</strong> Work on <em>Integrating Essential Skills</em> — fractions, percentages, ratios, slope, linear equations, coordinate plane basics, and interpreting graphs/tables.</li>
+        <li><strong>Rationale:</strong> These questions account for <strong>the largest share of ACT Math</strong> — roughly 25 of the 60 problems (about 40% of the test). Building accuracy here creates the strongest foundation for overall growth.</li>
+        <li><strong>Approach:</strong> Short practice sets with repeated review, emphasizing accuracy and consistency in the most frequently tested skills.</li>
+        <li><strong>Example:</strong> A store marks up the price of a $40 jacket by 25%. During a sale, the store takes 20% off the new price. What is the final price of the jacket?</li>
+      </ul>
 
-    <h4>Tier 2: Challenge Track (Approx. Goal: 27+)</h4>
-    <ul>
-      <li><strong>Entry:</strong> For students who have shown consistent progress on Essentials.</li>
-      <li><strong>Focus:</strong> Higher-level <em>Challenge Standards</em> — quadratics, systems of equations, polynomial/rational functions, circle geometry, and introductory trigonometry.</li>
-      <li><strong>Approach:</strong> Extended practice with multi-step problems, targeted feedback, and enrichment aimed at advanced algebra and precalculus content.</li>
-    </ul>
+      <h4>Tier 2: Challenge Track (Approx. Goal: 27+)</h4>
+      <ul>
+        <li><strong>Entry:</strong> For students who have shown consistent progress on Essentials.</li>
+        <li><strong>Focus:</strong> Higher-level <em>Challenge Standards</em> — quadratics, systems of equations, polynomial/rational functions, circle geometry, and introductory trigonometry.</li>
+        <li><strong>Approach:</strong> Extended practice with multi-step problems, targeted feedback, and enrichment aimed at advanced algebra and precalculus content.</li>
+      </ul>
 
-    <h4>Overall Strategy</h4>
-    <p>
-      Students begin with the <strong>Essentials Track</strong> to strengthen core skills. 
-      Those who demonstrate readiness can take on the <strong>Challenge Track</strong>, which adds higher-level content to support further growth. 
-      This two-tier model keeps practice focused and gives students clear next steps as they improve.
-    </p>
-  </div>
-</details>
-
+      <h4>Overall Strategy</h4>
+      <p>
+        Students begin with the <strong>Essentials Track</strong> to strengthen core skills. 
+        Those who demonstrate readiness can take on the <strong>Challenge Track</strong>, which adds higher-level content to support further growth. 
+        This two-tier model keeps practice focused and gives students clear next steps as they improve.
+      </p>
+    </div>
+  </details>
 
   <details>
     <summary>English</summary>
