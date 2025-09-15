@@ -25,33 +25,98 @@
     }
     .hardline-home:hover { background: #00ff99; color: black; }
     h1 { margin-top: 2em; }
-    section { margin-top: 2em; }
+
+    /* Dropdown box styling */
+    details {
+      border: 1px solid #00ff99;
+      border-radius: 8px;
+      margin-top: 1.5em;
+      padding: 0.5em 1em;
+      background: rgba(0, 255, 153, 0.05);
+    }
+    summary {
+      cursor: pointer;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00ff99;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    summary::-webkit-details-marker {
+      display: none; /* hides default arrow in Chrome/Safari */
+    }
+    /* Closed arrow */
+    summary::before {
+      content: "▶";
+      font-size: 1em;
+      color: #00ff99;
+      transition: transform 0.3s ease;
+    }
+    /* Open arrow */
+    details[open] summary::before {
+      content: "▼";
+    }
+    details[open] {
+      padding-bottom: 1.2em;
+    }
+    details ul {
+      margin-top: 0.5em;
+    }
   </style>
 </head>
 <body>
   <a href="home.html" class="hardline-home">☎️ Hardline Home</a>
 
-  <h1>➗ ACT Practice</h1>
+  <h1>ACT Practice</h1>
   <p>ACT College & Career Readiness practice sections coming soon:</p>
 
-  <section>
-    <h2>Math</h2>
-    <p>Mini practice sets like the one you’ve already tested.</p>
-  </section>
+<details>
+  <summary>Math</summary>
+  <p>Mini practice sets like the one you’ve already tested.</p>
 
-  <section>
-    <h2>English</h2>
+  <div class="act-prep">
+    <h3>ACT Prep Pathway</h3>
+
+    <h4>Tier 1: Essentials Track (Approx. Goal: 23+)</h4>
+    <ul>
+      <li><strong>Focus:</strong> Work on <em>Integrating Essential Skills</em> — fractions, percentages, ratios, slope, linear equations, coordinate plane basics, and interpreting graphs/tables.</li>
+      <li><strong>Rationale:</strong> These questions account for <strong>the largest share of ACT Math</strong> — roughly 25 of the 60 problems (about 40% of the test). Building accuracy here creates the strongest foundation for overall growth.</li>
+      <li><strong>Approach:</strong> Short practice sets with repeated review, emphasizing accuracy and consistency in the most frequently tested skills.</li>
+      <li><strong>Example:</strong> A store marks up the price of a $40 jacket by 25%. During a sale, the store takes 20% off the new price. What is the final price of the jacket?</li>
+    </ul>
+
+    <h4>Tier 2: Challenge Track (Approx. Goal: 27+)</h4>
+    <ul>
+      <li><strong>Entry:</strong> For students who have shown consistent progress on Essentials.</li>
+      <li><strong>Focus:</strong> Higher-level <em>Challenge Standards</em> — quadratics, systems of equations, polynomial/rational functions, circle geometry, and introductory trigonometry.</li>
+      <li><strong>Approach:</strong> Extended practice with multi-step problems, targeted feedback, and enrichment aimed at advanced algebra and precalculus content.</li>
+    </ul>
+
+    <h4>Overall Strategy</h4>
+    <p>
+      Students begin with the <strong>Essentials Track</strong> to strengthen core skills. 
+      Those who demonstrate readiness can take on the <strong>Challenge Track</strong>, which adds higher-level content to support further growth. 
+      This two-tier model keeps practice focused and gives students clear next steps as they improve.
+    </p>
+  </div>
+</details>
+
+
+  <details>
+    <summary>English</summary>
     <p>Grammar, punctuation, and sentence structure drills.</p>
-  </section>
+  </details>
 
-  <section>
-    <h2>Reading</h2>
+  <details>
+    <summary>Reading</summary>
     <p>Passages with comprehension and inference questions.</p>
-  </section>
+  </details>
 
-  <section>
-    <h2>Science</h2>
+  <details>
+    <summary>Science</summary>
     <p>Practice interpreting data, graphs, and experimental setups.</p>
-  </section>
+  </details>
 </body>
 </html>
