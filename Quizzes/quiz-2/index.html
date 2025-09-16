@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz 2 – AI Prompting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Quiz 2 – Effective Prompting</h1>
+
+  <!-- Login -->
+  <div id="login">
+    <p>Email: <input id="email" type="text"></p>
+    <p>PIN: <input id="pin" type="password"></p>
+    <button onclick="login()">Login</button>
+    <p id="login-status"></p>
+  </div>
+
+  <!-- Quiz -->
+  <form id="quiz" class="hidden" onsubmit="submitQuiz(event)">
+    <div id="quiz-container"></div>
+    <button type="submit">Submit Quiz</button>
+  </form>
+
+  <script src="quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "questions": [
+    {
+      "type": "short",
+      "text": "A mock task that can be greatly benefited by effectively using AI. Write a prompt template for it."
+    },
+    {
+      "type": "mc",
+      "text": "Effective prompting requires:",
+      "options": ["Random guessing", "Clear identity, role, and task", "Using as few words as possible"]
+    },
+    {
+      "type": "tf",
+      "text": "The blue/red marble analogy teaches about randomness in AI outputs."
+    }
+  ]
+}
