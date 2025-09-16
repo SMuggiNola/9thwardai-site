@@ -251,3 +251,21 @@ main {
   background: #00ff99;
   color: black;
 }
+nav a {
+  text-decoration: none;
+  padding: 0.5em 1em;
+  margin-left: 1em;
+  border: 1px solid #00ff99;
+  border-radius: 5px;
+  color: #00ff99;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  background: #00ff99;
+  color: black;
+}
+
+.button-link {
+  font-weight: bold;
+}
